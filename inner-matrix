@@ -1,0 +1,79 @@
+/**
+Дан шаблон:
+    [0, 0, 0, 0, 0, 0]           
+    [0, 0, 0, 0, 0, 0]    
+    [0, 0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 0, 0] 
+    [0, 0, 0, 0, 0, 0] 
+
+Дана матрица:
+    [1, 2, 3]
+    [4, 5, 6]
+    [7, 8, 9]
+
+Сделать:
+    [0, 0, 0, 0, 0, 0]           
+    [0, 0, 0, 0, 0, 0]    
+    [0, 0, 0, 0, 0, 0]
+    [0, 0, 0, 1, 2, 3]
+    [0, 0, 0, 4, 5, 6] 
+    [0, 0, 0, 7, 8, 9] 
+ */
+const templateMatrix = generateTemplateMatrix(8, "x");
+
+const innerMatrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+];
+
+const insertMatrixToTemplate = (templateMatrix, matrix) => {
+  const result = [];
+  const countTmplColumns = templateMatrix[0].length;
+  const countTmplRows = templateMatrix.length;
+
+  const countColumns = matrix[0].length;
+  const countRows = matrix.length;
+
+  const startRowsPosition = countTmplRows - countRows - 1;
+  const startColumnPosition = countTmplColumns - countColumns - 1;
+
+  const totalCount = countTmplColumns * countTmplRows;
+
+  // пишем код ниже этой строки
+  let row = 0;
+  let column = 0;
+
+  while (true) {
+    if (!result[row]) {
+      result[row] = [];
+    }
+
+    if (row > startRowsPosition && column > startColumnPosition) {
+      result[row].push(
+        matrix[row - startRowsPosition - 1][column - startColumnPosition - 1]
+      );
+    } else {
+      result[row].push(templateMatrix[row][column]);
+    }
+
+    if (column === countTmplColumns - 1) {
+      row++;
+      column = 0;
+    } else {
+      column++;
+    }
+
+    if (row >= countTmplRows) {
+      break;
+    }
+  }
+
+  //пишем код выше этой строки
+  return result;
+};
+
+//console.log(insertMatrixToTemplate(templateMatrix, innerMatrix));
+//console.log(templateMatrix);
+//console.log(innerMatrix);
